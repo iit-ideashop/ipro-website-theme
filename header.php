@@ -61,8 +61,6 @@
 	</ul>
 </div>
 <?php if ((is_front_page()) and (!is_paged())) { ?>
-<?php define('SCLC_TOKEN', 'cz6d5orxzp');
-include 'classes/ie7css.php'; ?>
 <?php } ?>
 <div class="breadcrumb">
 <?php
