@@ -72,7 +72,7 @@ $qres->close();
 	<tr><td><label for="faculty">Faculty</label></td><td><input type="text" name="faculty" size="30" id="faculty" /></td></tr>
 	<tr><td><label for="disciplines">Suggested Disciplines</label></td><td><select name="disciplines" id="disciplines"><option value=""></option>
 <?php
-	$query = $db->query("SELECT * FROM Disciplines");
+	$query = $db->query("SELECT * FROM Disciplines ORDER BY disciplines");
 	$disciplines = array();
 	while ($row = $query->fetch_row())
 		$disciplines[] = str_replace('&', '&amp;', $row[0]);

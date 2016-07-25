@@ -45,23 +45,15 @@ if(!function_exists('searchAndReplace'))
 
 $db = dbConnect();
 if (isset($_POST['search'])) {
-	$sql = $db->prepare("SELECT * FROM Projects WHERE Section IS NOT NULL AND Section LIKE ? AND Semester LIKE ? AND Year LIKE ? AND Title LIKE ? AND Faculty LIKE ? AND Description LIKE ? AND Disciplines LIKE ? ORDER BY Year DESC");
+	$sql = $db->prepare("SELECT * FROM Projects WHERE Section IS NOT NULL AND Section LIKE ? AND Semester LIKE ? AND Year LIKE ? AND INSTR(Title, ?) > 0 AND INSTR(Faculty, ?) > 0 AND INSTR(Description, ?) > 0 AND INSTR(Disciplines, ?) > 0 ORDER BY Year DESC");
 	if ($_POST['section'] == '')
 		$_POST['section']="%";
 	if ($_POST['term'] == '')
 		$_POST['term']="%";
-	if ($_POST['year'] == '')
-		$_POST['year']="%";
-	if ($_POST['title'] == '')
-		$_POST['title']="%";
-	if ($_POST['faculty'] == '')
-		$_POST['faculty']="%";
-	if ($_POST['description'] == '')
-                $_POST['description']="%";
-	if ($_POST['disciplines'] == '')
-                $_POST['disciplines']="%";
+	if ($_POST['courseyear'] == '')
+		$_POST['courseyear']="%";
 
-	$sql->bind_param("sssssss",$_POST['section'],$_POST['term'],$_POST['year'],$_POST['title'],$_POST['faculty'],$_POST['description'],$_POST['disciplines']);
+	$sql->bind_param("sssssss",$_POST['section'],$_POST['term'],$_POST['courseyear'],$_POST['title'],$_POST['faculty'],$_POST['description'],$_POST['disciplines']);
 	$sql->execute();
 	$qres = $sql->get_result();
 
