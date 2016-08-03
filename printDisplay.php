@@ -3,12 +3,17 @@
 include_once('classes/db.php');
 include_once('year_semester.php');
 
-$db = new dbConnection();
+$db = dbConnect();
 
-$query = $db->dbQuery("SELECT * FROM Projects WHERE Year='{$_GET['year']}' AND Semester='{$_GET['term']}' AND Section='{$_GET['section']}'");
+$query = $db->prepare("SELECT * FROM Projects WHERE Year=? AND Semester=? AND Section=?");
+$query->bind_param("sss", $_GET['year'], $_GET['term'], $_GET['section']);
+$query->execute();
+$qres = $query->get_result();
 $projects = array();
-while ($row = mysql_fetch_array($query))
+while ($row = $qres->fetch_assoc())
 	$projects[] = $row;
+$qres->close();
+$query->close();
 ?>
 
 <html>
